@@ -11,18 +11,17 @@ class HashTable:
         self.table = [None] * size
     
     def _hash_multiplicacao(self, key):
-        # Convertendo key para int (se for string, usando soma dos códigos)
+        
         if isinstance(key, str):
             key_int = sum(ord(c) for c in key)
         else:
             key_int = int(key)
-        A = 0.6180339887  # constante irracional (número áureo aproximado)
+        A = 0.6180339887  
         frac = (key_int * A) % 1
         return int(self.size * frac)
     
     def _enlacamento_limite(self, index):
-        # Enlaçamento limite: garante que o tamanho da cadeia não ultrapasse o limite
-        # Se a lista no índice já estiver no limite, tenta próximo índice (linear)
+        
         start_index = index
         while True:
             length = 0
@@ -32,7 +31,8 @@ class HashTable:
                 node = node.next
             if length < self.chain_limit:
                 return index
-            index = (index + 1) % self.size
+            else:
+                index = (index + 1) % self.size
             if index == start_index:
                 raise Exception("Tabela cheia: não é possível inserir a nova chave.")
     
@@ -44,7 +44,7 @@ class HashTable:
         if self.table[index] is None:
             self.table[index] = new_node
         else:
-            # Encadeamento: insere no começo da lista ligada
+            
             new_node.next = self.table[index]
             self.table[index] = new_node
     
@@ -52,16 +52,17 @@ class HashTable:
         index = self._hash_multiplicacao(key)
         start_index = index
 
-        # Considerar enlaçamento limite e sondagem linear para buscar
+        
         while True:
             node = self.table[index]
             while node:
                 if node.key == key:
                     return node.value
-                node = node.next
+                else:
+                    node = node.next
             index = (index + 1) % self.size
             if index == start_index:
-                return None  # não achou
+                return None  
     
     def display(self):
         print("\nTabela Hash (index : [chaves]):")
@@ -77,7 +78,7 @@ def executar():
     print("=== Executando Desafio 2: Hashing com Multiplicação e Enlaçamento Limite ===")
     ht = HashTable(size=7, chain_limit=2)
 
-    # Inserindo algumas chaves para testar
+    
     dados = [("Ana", 25), ("Bruno", 30), ("Carla", 22), ("Diego", 28), ("Eva", 35), ("Fábio", 20)]
 
     for nome, idade in dados:
@@ -86,7 +87,7 @@ def executar():
     
     ht.display()
 
-    # Testando buscas
+    
     nomes_busca = ["Ana", "Eva", "Lucas"]
     for nome in nomes_busca:
         resultado = ht.search(nome)
