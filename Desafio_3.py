@@ -1,62 +1,63 @@
 import random
 
-def rabin_karp(texto, padroes, base, primo):
-    tamanho = len(texto)
-    ocorrencias_encontradas = []
+def rabin_karp(texto, padrao, base, primo):
+    n = len(texto)
+    ocorrencias = [] 
 
-    for padrao in padroes:
-        tamanho_padrao = len(padrao)
-        if tamanho_padrao == 0 or tamanho_padrao > tamanho:
+    for pattern in padrao:
+        tamanho_padrao = len(pattern)
+        if tamanho_padrao == 0: 
             continue
-
-        hash_base = pow(base, tamanho_padrao - 1, primo)
-        hash_padrao = 0
-        hash_texto = 0
+        if tamanho_padrao > n: 
+            continue
+        #operações de exponenciação
+        h = pow(base, tamanho_padrao - 1, primo) 
+        p_hash = 0 
+        t_hash = 0 
 
         for i in range(tamanho_padrao):
-            hash_padrao = (base * hash_padrao + ord(padrao[i])) % primo
-            hash_texto = (base * hash_texto + ord(texto[i])) % primo
+            p_hash = (base * p_hash + ord(pattern[i])) % primo
+            t_hash = (base * t_hash + ord(texto[i])) % primo
 
-        for i in range(tamanho - tamanho_padrao + 1):
-            if hash_padrao == hash_texto:
-                correspondente = True
-                for j in range(tamanho_padrao):
-                    if padrao[j] != texto[i + j]:
-                        correspondente = False
+        for s in range(n - tamanho_padrao + 1):
+            if p_hash == t_hash:
+                match = True
+                for i in range(tamanho_padrao):
+                    if pattern[i] != texto[s + i]:
+                        match = False
                         break
-                if correspondente:
-                    ocorrencias_encontradas.append((padrao, i))
+                if match:
+                    ocorrencias.append((pattern, s))
 
-            if i < tamanho - tamanho_padrao:
-                hash_texto = (base * (hash_texto - ord(texto[i]) * hash_base) + ord(texto[i + tamanho_padrao])) % primo
-                hash_texto = (hash_texto + primo) % primo 
-    return ocorrencias_encontradas
+            if s < n - tamanho_padrao:
+                t_hash = (base * (t_hash - ord(texto[s]) * h) + ord(texto[s + tamanho_padrao])) % primo
+                t_hash = (t_hash + primo) % primo
+    return ocorrencias
 
-def remover_marcas_de_corrupcao(texto, ocorrencias):
-    texto_como_lista = list(texto)
-    ocorrencias.sort(key=lambda x: x[1], reverse=True)
+def remover_marcas_de_corrupcao(texto, marcas_encontradas):
+    texto_lista = list(texto)
+    
+    marcas_encontradas.sort(key=lambda x: x[1], reverse=True)
 
-    for padrao, inicio in ocorrencias:
-        fim = inicio + len(padrao)
-        for i in range(inicio, fim):
-            texto_como_lista[i] = ' '
-
-    return "".join(texto_como_lista)
+    for pattern, onde_comeca in marcas_encontradas:
+        fim_index = onde_comeca + len(pattern)
+        for i in range(onde_comeca, fim_index):
+            texto_lista[i] = ' ' 
+            
+    return "".join(texto_lista)
 
 def executar():
-    print("\n Desafio 3: A Purificação do Tomo Corrompido\n")
-
     tomo = """Há muito tempo, no Reino Binário, onde códigos fluem como rios de lógica, 
-vivia a sábia e corajosa Princesa Cessia, guardiã dos Segredos Algorítmicos. 
-Seu conhecimento mantinha o equilíbrio entre os mundos da Computação. 
-Mas a paz foi quebrada quando o traiçoeiro Dr. Bahia, mestre das Estruturas Corrompidas, 
-lançou sua sombra sobre o reino e raptou a princesa, escondendo-a nas profundezas 
-de uma fortaleza repleta de armadilhas lógicas e desafios computacionais.
+            vivia a sábia e corajosa Princesa Cessia, guardiã dos Segredos Algorítmicos. 
+            Seu conhecimento mantinha o equilíbrio entre os mundos da Computação. 
+            Mas a paz foi quebrada quando o traiçoeiro Dr. Bahia, mestre das Estruturas Corrompidas, 
+            lançou sua sombra sobre o reino e raptou a princesa, escondendo-a nas profundezas 
+            de uma fortaleza repleta de armadilhas lógicas e desafios computacionais.
 
-Em meio ao caos, surge um herói improvável: Dudão, um programador destemido e curioso, 
-convocado pelo Conselho de Bytes para embarcar numa missão de resgate. 
-Mas essa não é uma aventura comum. Dudão precisa atravessar os mundos fragmentados do Reino Binário, 
-cada um representando um tema crucial da disciplina de Estruturas de Dados e Algoritmos II."""
+            Em meio ao caos, surge um herói improvável: Dudão, um programador destemido e curioso, 
+            convocado pelo Conselho de Bytes para embarcar numa missão de resgate. 
+            Mas essa não é uma aventura comum. Dudão precisa atravessar os mundos fragmentados do Reino Binário, 
+            cada um representando um tema crucial da disciplina de Estruturas de Dados e Algoritmos II."""
 
     marcas_de_corrupcao = [
         "Dr. Bahia",
@@ -65,23 +66,23 @@ cada um representando um tema crucial da disciplina de Estruturas de Dados e Alg
         "Computação",
         "algoritmos corretos", 
         "árvores binárias", 
-        "listas encadeadas"
+        "listas encadeadas"  
     ]
 
-    base = 256
-    primo = 101
+    base = 256 
+    primo = 101 
 
-    print(" Buscando marcas de corrupção no tomo...\n")
-    ocorrencias = rabin_karp(tomo, marcas_de_corrupcao, base, primo)
+    print("Buscando marcas de corrupção no tomo...\n")
+    marcas_encontradas = rabin_karp(tomo, marcas_de_corrupcao, base, primo)
 
-    if ocorrencias:
-        print("Marcas de corrupção encontradas:")
-        for padrao, posicao in ocorrencias:
-            print(f" - '{padrao}' na posição {posicao}")
-    else:
-        print("Nenhuma marca de corrupção encontrada.")
+    print("Marcas de corrupção encontradas:")
+    for pattern, pos in marcas_encontradas:
+        print(f"- '{pattern}' na posição {pos}")
 
-    tomo_purificado = remover_marcas_de_corrupcao(tomo, ocorrencias)
+    tomo_limpo = remover_marcas_de_corrupcao(tomo, marcas_encontradas)
 
-    print("\n Tomo purificado:\n")
-    print(tomo_purificado)
+    print("\nTomo limpo:\n")
+    print(tomo_limpo)
+
+
+executar()

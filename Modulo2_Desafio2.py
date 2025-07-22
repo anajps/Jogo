@@ -1,82 +1,81 @@
-class Node:
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
+class no_atual:
+    def __init__(self, chave, valor):
+        self.chave = chave
+        self.valor = valor
         self.next = None
 
-class HashTable:
-    def __init__(self, size=10, chain_limit=3):
-        self.size = size
-        self.chain_limit = chain_limit
-        self.table = [None] * size
+class Hashtabela:
+    def __init__(self, tamanho=10, limite=3):
+        self.tamanho = tamanho
+        self.limite = limite
+        self.tabela = [None] * tamanho
     
-    def _hash_multiplicacao(self, key):
+    def _hash_multiplicacao(self, chave):
         
-        if isinstance(key, str):
-            key_int = sum(ord(c) for c in key)
+        if isinstance(chave, str):
+            chave_int = sum(ord(c) for c in chave)
         else:
-            key_int = int(key)
+            chave_int = int(chave)
         A = 0.6180339887  
-        frac = (key_int * A) % 1
-        return int(self.size * frac)
+        frac = (chave_int * A) % 1
+        return int(self.tamanho * frac)
     
     def _enlacamento_limite(self, index):
         
-        start_index = index
+        indice_inicial = index
         while True:
             length = 0
-            node = self.table[index]
-            while node:
+            no_atual = self.tabela[index]
+            while no_atual:
                 length += 1
-                node = node.next
-            if length < self.chain_limit:
+                no_atual = no_atual.next
+            if length < self.limite:
                 return index
             else:
-                index = (index + 1) % self.size
-            if index == start_index:
+                index = (index + 1) % self.tamanho
+            if index == indice_inicial:
                 raise Exception("Tabela cheia: não é possível inserir a nova chave.")
     
-    def insert(self, key, value):
-        index = self._hash_multiplicacao(key)
+    def insert(self, chave, valor):
+        index = self._hash_multiplicacao(chave)
         index = self._enlacamento_limite(index)
 
-        new_node = Node(key, value)
-        if self.table[index] is None:
-            self.table[index] = new_node
+        novo_No = no_atual(chave, valor)
+        if self.tabela[index] is None:
+            self.tabela[index] = novo_No
         else:
-            
-            new_node.next = self.table[index]
-            self.table[index] = new_node
+            novo_No.next = self.tabela[index]
+            self.tabela[index] = novo_No
     
-    def search(self, key):
-        index = self._hash_multiplicacao(key)
-        start_index = index
+    def search(self, chave):
+        index = self._hash_multiplicacao(chave)
+        indice_inicial = index
 
         
         while True:
-            node = self.table[index]
-            while node:
-                if node.key == key:
-                    return node.value
+            no_atual = self.tabela[index]
+            while no_atual:
+                if no_atual.chave == chave:
+                    return no_atual.valor
                 else:
-                    node = node.next
-            index = (index + 1) % self.size
-            if index == start_index:
+                    no_atual = no_atual.next
+            index = (index + 1) % self.tamanho
+            if index == indice_inicial:
                 return None  
     
     def display(self):
         print("\nTabela Hash (index : [chaves]):")
-        for i, node in enumerate(self.table):
-            keys = []
-            current = node
-            while current:
-                keys.append(f"{current.key}:{current.value}")
-                current = current.next
-            print(f"{i} : {keys}")
+        for i, no_atual in enumerate(self.tabela):
+            chaves = []
+            no_corrente = no_atual
+            while no_corrente:
+                chaves.append(f"{no_corrente.chave}:{no_corrente.valor}")
+                no_corrente = no_corrente.next
+            print(f"{i} : {chaves}")
 
 def executar():
     print("=== Executando Desafio 2: Hashing com Multiplicação e Enlaçamento Limite ===")
-    ht = HashTable(size=7, chain_limit=2)
+    ht = Hashtabela(tamanho=7, limite=2)
 
     
     dados = [("Ana", 25), ("Bruno", 30), ("Carla", 22), ("Diego", 28), ("Eva", 35), ("Fábio", 20)]

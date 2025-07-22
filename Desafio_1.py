@@ -17,11 +17,9 @@ def executar():
     print("Fragmentos mágicos disponíveis na mochila de Dudão:")
     print(fragmentos)
 
-    try:
-        id = int(input("Digite o ID do Pergaminho Vital a ser encontrado: "))
-    except ValueError:
-        print(" Entrada inválida. Use apenas números inteiros.")
-        return
+    
+    id = int(input("Digite o ID do Pergaminho Vital a ser encontrado: "))
+    
 
     inicio = time.time()
     posicao, comparacoes = busca_sequencial(fragmentos, id)

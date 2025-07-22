@@ -1,8 +1,8 @@
 from queue import PriorityQueue
 
 class No:
-    def __init__(self, char, frequencia):
-        self.char = char
+    def __init__(self, caractere, frequencia):
+        self.caractere = caractere
         self.frequencia = frequencia
         self.esq = None
         self.dir = None
@@ -12,67 +12,67 @@ class No:
 
 def tabela_frequencia_caracter(texto):
     tabela = {}
-    for char in texto:
-        tabela[char] = tabela.get(char, 0) + 1
+    for caractere in texto:
+        tabela[caractere] = tabela.get(caractere, 0) + 1
     return tabela
 
 def montar_arvore(tabela):
-    fila_prioridade = PriorityQueue()
-    for char, frequencia in tabela.items():
-        fila_prioridade.put(No(char, frequencia))
+    fila = PriorityQueue()
+    for caractere, frequencia in tabela.items():
+        fila.put(No(caractere, frequencia))
 
-    while fila_prioridade.qsize() > 1:
-        primeiro = fila_prioridade.get()
-        segundo = fila_prioridade.get()
+    while fila.qsize() > 1:
+        primeiro = fila.get()
+        segundo = fila.get()
         novo = No('+', primeiro.frequencia + segundo.frequencia)
         novo.esq = primeiro
         novo.dir = segundo
-        fila_prioridade.put(novo)
+        fila.put(novo)
 
-    return fila_prioridade.get()
+    return fila.get()
 
-def gerar_codigo(raiz, codigo_atual, dic):
-    if raiz is None:
-        return 0
+def gerar_codigo(no, codigo_atual, tabela_codigos):
+    if no is None:
+        return 
 
-    if raiz.char != '+':
-        dic[raiz.char] = codigo_atual
+    if no.caractere != '+':
+        tabela_codigos[no.caractere] = codigo_atual
         return
 
-    gerar_codigo(raiz.esq, codigo_atual + '0', dic)
-    gerar_codigo(raiz.dir, codigo_atual + '1', dic)
+    gerar_codigo(no.esq, codigo_atual + '0', tabela_codigos)
+    gerar_codigo(no.dir, codigo_atual + '1', tabela_codigos)
 
-def codificar(texto, dic):
+def conversao_texto(texto, tabela_codigos):
     codigo = ''
-    for char in texto:
-        codigo += dic[char]
+    for caractere in texto:
+        codigo += tabela_codigos[caractere]
     return codigo
 
-def decodificar(codigo, raiz):
+def desconversao_texto(codigo, no):
     texto = ''
-    atual = raiz
+    atual = no
     for bit in codigo:
         if bit == '0':
             atual = atual.esq
         else:
             atual = atual.dir
 
-        if atual.char != '+':
-            texto += atual.char
-            atual = raiz
+        if atual.caractere != '+':
+            texto += atual.caractere
+            atual = no
 
     return texto
 
 def executar():
-    print("=== Compressão de Texto com Huffman ===")
+    print(" Compressão de Texto com Huffman ")
     texto = input("Digite o texto para compressão: ")
     
     tabela = tabela_frequencia_caracter(texto)
     arvore = montar_arvore(tabela)
-    dic = {}
-    gerar_codigo(arvore, '', dic)
-    codigo = codificar(texto, dic)
-    texto_decodificado = decodificar(codigo, arvore)
+    tabela_codigos = {}
+    gerar_codigo(arvore, '', tabela_codigos)
+    codigo = conversao_texto(texto, tabela_codigos)
+    texto_decodificado = desconversao_texto(codigo, arvore)
 
     tamanho_original = len(texto) * 8  
     tamanho_codificado = len(codigo)
@@ -89,7 +89,7 @@ def executar():
     if texto == texto_decodificado:
         print("\n Compressão e descompressão bem-sucedidas!")
     else:
-        print("\n Erro: o texto decodificado não corresponde ao original.")
+        print("\n Erro")
 
 def main():
     executar()

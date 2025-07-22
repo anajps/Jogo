@@ -45,32 +45,30 @@ def executar():
     print(" Lista 1:", lista1)
     print(" Lista 2:", lista2)
 
-    try:
-        num_ids = int(input("\nQuantos IDs serão procurados? "))
-    except ValueError:
-        print("Entrada inválida. Use apenas números inteiros.")
-        return
+   
+    num_ids = int(input("\nQuantos IDs serão procurados? "))
+    
 
     for i in range(num_ids):
         try:
-            x = int(input(f"\nDigite o ID do Pergaminho {i+1} a ser encontrado: "))
+            a = int(input(f"\nDigite o ID do Pergaminho {i+1} a ser encontrado: "))
         except ValueError:
             print("Entrada inválida. Usando ID 0 por padrão.")
-            x = 0
+            a = 0
 
         total_comparacoes = 0
         tempo = time.time() 
 
        
         InicioTempo_1 = time.time()
-        ocorrencias_l1, comp_1 = busca_binaria(lista1, x)
+        ocorrencias_l1, comp_1 = busca_binaria(lista1, a)
         FimTempo_1 = time.time()
         tempo_l1 = (FimTempo_1 - InicioTempo_1) * 1000
         total_comparacoes += comp_1
 
        
         InicioTempo_2 = time.time()
-        ocorrencias_l2, comp_2 = busca_binaria(lista2, x)
+        ocorrencias_l2, comp_2 = busca_binaria(lista2, a)
         FimTempo_2 = time.time()
         tempo_l2 = (FimTempo_2 - InicioTempo_2) * 1000
         total_comparacoes += comp_2
@@ -78,20 +76,20 @@ def executar():
         tempo_total_por_id = (FimTempo_2 - tempo) * 1000
 
         
-        print(f"\n---  Resultados para o ID {x} ---")
+        print(f"\n---  Resultados para o ID {a} ---")
         if ocorrencias_l1:
-            print(f" Lista 1: O elemento {x} foi encontrado nas posições {ocorrencias_l1}.")
+            print(f" Lista 1: O elemento {a} foi encontrado nas posições {ocorrencias_l1}.")
         else:
-            print(f"Lista 1: O elemento {x} não foi encontrado.")
+            print(f"Lista 1: O elemento {a} não foi encontrado.")
         print(f"   Comparações na Lista 1: {comp_1}")
         print(f"   Tempo de execução na Lista 1: {tempo_l1:.6f} ms")
 
         if ocorrencias_l2:
-            print(f" Lista 2: O elemento {x} foi encontrado nas posições {ocorrencias_l2}.")
+            print(f" Lista 2: O elemento {a} foi encontrado nas posições {ocorrencias_l2}.")
         else:
-            print(f" Lista 2: O elemento {x} não foi encontrado.")
+            print(f" Lista 2: O elemento {a} não foi encontrado.")
         print(f"  Comparações na Lista 2: {comp_2}")
         print(f"  Tempo de execução na Lista 2: {tempo_l2:.6f} ms")
 
-        print(f" Total de comparações para o ID {x}: {total_comparacoes}")
+        print(f" Total de comparações para o ID {a}: {total_comparacoes}")
         print(f" Tempo total de execução: {tempo_total_por_id:.6f} ms")
