@@ -1,19 +1,17 @@
 # Projeto - Fase 2: Desafios Algorítmicos
 
 
- Estrutura do Projeto
- 
- Desafio_1.py   
- Este código implementa a busca sequencial para encontrar um valor específico em uma lista de números únicos gerados aleatoriamente. Ele  percorre a lista elemento a elemento, contando o número de comparações até encontrar o valor desejado ou concluir que ele não está presente. Também mede o tempo de execução da busca
+Estrutura do Projeto 
+Desafio_1.py 
+O código implementa a busca sequencial para encontrar um valor específico em uma lista de números únicos gerados aleatoriamente. Ele  percorre a lista elemento a elemento, contando o número de comparações até encontrar o valor desejado ou concluir que ele não está presente. Também mede o tempo de execução da busca
  ----------------------------------------------------------------------
- Desafio_2.py  
-Código implementa a busca binária para localizar todas as ocorrências de um valor em listas ordenadas. Após encontrar uma ocorrência do valor, o algoritmo verifica as posições adjacentes para identificar todas as repetições consecutivas. Além disso, conta o número de comparações realizadas e mede o tempo de execução, exibindo resultados detalhados para cada valor buscado em duas listas diferentes.
+Desafio_2.py 
+O código implementa a busca binária para localizar todas as ocorrências de um valor em listas ordenadas. Após encontrar uma ocorrência do valor, o algoritmo verifica as posições adjacentes para identificar todas as repetições consecutivas. Além disso, conta o número de comparações realizadas e mede o tempo de execução, exibindo resultados detalhados para cada valor buscado em duas listas diferentes.
  -------------------------------------------------------------------------
- Desafio_3.py              
- O algoritmo Rabin-Karp calcula uma hash para o padrão e para janelas do texto, 
- comparando para encontrar ocorrências. Ao detectar possível ocorrência, 
- valida caractere a caractere para evitar falsos positivos.
- Este exemplo busca várias "marcas de corrupção" em um texto e as remove substituindo por espaços, simulando limpeza.            
+Desafio_3.py 
+O algoritmo Rabin-Karp calcula uma hash para o padrão e para janelas do texto, comparando para encontrar ocorrências 
+ao detectar possível ocorrência, valida caractere a caractere para evitar falsos positivos. Este exemplo busca várias "marcas de corrupção" 
+em um texto e as remove substituindo por espaços, simulando limpeza.       
 -----------------------------------------------------------------------
  Modulo2_Desafio1.py 
 - tabela_frequencia_caracter: cria tabela de frequências dos caracteres
