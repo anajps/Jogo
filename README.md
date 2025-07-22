@@ -15,18 +15,11 @@ O algoritmo rabin-karp calcula uma hash para o padrão e para janelas do texto, 
 ---
 
 ### modulo2_desafio1.py  
-- `tabela_frequencia_caracter`: cria tabela de frequências dos caracteres  
-- `montar_arvore`: monta árvore de huffman com base nas frequências  
-- `gerar_codigo`: gera os códigos binários para cada caractere  
-- `conversao_texto`: codifica texto para código binário  
-- `desconversao_texto`: decodifica código binário para texto original  
-- `executar`: função para testar o algoritmo com entrada do usuário  
+Este código realiza a compressão de texto utilizando o algoritmo de Huffman. Ele começa calculando a frequência de cada caractere no texto digitado pelo usuário e, com essas frequências, constrói uma árvore binária onde os caracteres mais frequentes ficam mais próximos da raiz. Em seguida, gera códigos binários únicos para cada caractere e codifica o texto original com esses códigos, reduzindo seu tamanho total. O texto codificado é então decodificado com base na árvore gerada, garantindo que o resultado final seja igual ao texto original. Por fim, o programa exibe o tamanho do texto original, o tamanho comprimido, a taxa de compressão e verifica se a compressão e a descompressão foram bem-sucedidas. 
 ---
 
 ### modulo2_desafio2.py  
-- função de hash por multiplicação (usando constante A = 0.618...)  
-- tratamento de colisão com enlaçamento encadeado e limite de elementos por índice (`limite`)  
-- métodos para inserção, busca e exibição dos dados  
+Este código implementa uma tabela hash com a função de espalhamento por multiplicação e tratamento de colisões utilizando o método de enlaçamento com limite de elementos por índice. Os dados são armazenados em uma estrutura encadeada dentro de cada posição da tabela, e cada posição aceita até um número máximo de elementos definidos pelo limite. Caso uma posição atinja esse limite, a inserção continua em posições seguintes da tabela, de forma circular, até encontrar espaço disponível
 ---
 
 ### main.py  
