@@ -83,10 +83,22 @@ def executar():
     for nome, idade in dados:
         print(f"Inserindo {nome} -> {idade}")
         ht.insert(nome, idade)
-    
+
+    max_insercoes = 3
+
+    for i in range(max_insercoes):
+        print(f"\nInserção de fragmento extra {i+1} de {max_insercoes}:")
+        nome = input("Digite o nome (chave): ").strip()
+        try:
+            idade = int(input("Digite a idade (valor): "))
+        except ValueError:
+            print("Idade inválida, valor padrão 0 será usado.")
+            idade = 0
+        ht.insert(nome, idade)
+        print(f"Inserido {nome} -> {idade}")
+
     ht.display()
 
-    
     nomes_busca = ["Ana", "Eva", "Lucas"]
     for nome in nomes_busca:
         resultado = ht.search(nome)
@@ -94,6 +106,3 @@ def executar():
             print(f"Busca: {nome} -> Idade: {resultado}")
         else:
             print(f"Busca: {nome} não encontrado na tabela.")
-
-if __name__ == "__main__":
-    executar()
