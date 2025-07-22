@@ -1,16 +1,22 @@
 # Projeto - Fase 2: Desafios Algorítmicos
 
 
-## Estrutura do Projeto
+ Estrutura do Projeto
+ 
+ Desafio_1.py              
+ Desafio_2.py              
+ Desafio_3.py              
+ Desafio1_M2.c             
 
-- `busca_sequencial.py`
-- `busca_binaria.py`
-- `rabin_karp.py`
+ Modulo2_Desafio1.py       
+ Modulo2_Desafio2.py       
+
+ main.py    
 
 
 Complexidades
 
-                        Nível de Complexidade 
+                    | Nível de Complexidade 
 Busca Sequencial    | O(n)                    
 Busca Binária       | O(log n)                
 Rabin-Karp          | O(n + m)  
