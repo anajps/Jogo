@@ -1,1 +1,0 @@
-Como cada algoritmo foi implementado e integrado.
